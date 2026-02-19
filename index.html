@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>WhatsApp OTP</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding-top: 50px; }
+        .card { border: 1px solid #ccc; padding: 20px; border-radius: 10px; }
+        input { padding: 10px; margin-bottom: 10px; width: 200px; }
+        button { padding: 10px; background: #25D366; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>შეიყვანე ნომერი</h3>
+        <input type="text" id="phone" placeholder="995555123456">
+        <button onclick="sendCode()">კოდის მიღება</button>
+    </div>
+
+    <script>
+        async function sendCode() {
+            const phone = document.getElementById('phone').value;
+            // აი აქ ჩაწერ იმ ლინკს, რომელსაც RENDER მოგცემს ატვირთვის შემდეგ
+            const response = await fetch('https://შენი-საიტი.onrender.com/send-otp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: phone })
+            });
+            const data = await response.json();
+            if(data.success) alert("კოდი გაიგზავნა WhatsApp-ზე!");
+            else alert("შეცდომა!");
+        }
+    </script>
+</body>
+</html>
