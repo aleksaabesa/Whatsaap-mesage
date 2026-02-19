@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital OTP & Verify</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 50px; background: #f4f7f6; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: inline-block; width: 320px; margin: 10px; vertical-align: top; }
+        h2 { color: #2c3e50; margin-bottom: 20px; }
+        input { padding: 12px; width: 90%; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 20px; outline: none; font-size: 16px; }
+        .wa-btn { background: #25D366; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 10px; text-decoration: none; display: block; }
+        .verify-btn { background: #3498db; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; }
+        #status { margin-top: 15px; font-weight: bold; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Hospital 🏥</h2>
+        <p>შეიყვანეთ ნომერი:</p>
+        <input type="text" id="phone" placeholder="მაგ: 555683731">
+        <button onclick="sendOTP()" class="wa-btn">WhatsApp-ით მიღება</button>
+    </div>
+
+    <div class="card">
+        <h2>ვერიფიკაცია ✅</h2>
+        <p>შეიყვანეთ მიღებული კოდი:</p>
+        <input type="text" id="verifyCode" placeholder="ჩაწერეთ კოდი">
+        <button onclick="checkCode()" class="verify-btn">შემოწმება</button>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // 1. WhatsApp-ზე გაგზავნის იმიტაცია
+        function sendOTP() {
+            let phone = document.getElementById('phone').value.trim();
+            if(!phone) { alert("შეიყვანეთ ნომერი!"); return; }
+            if(phone.startsWith('5')) { phone = '995' + phone; }
+
+            const randomCode = Math.floor(1000 + Math.random() * 9000);
+            const message = `🏥 *HOSPITAL*\n\nთქვენი კოდია: *${randomCode}*`;
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // 2. შემოწმების ფუნქცია - ახლა ყველაფერზე დაწერს "სწორია"
+        function checkCode() {
+            const inputCode = document.getElementById('verifyCode').value.trim();
+            const statusDiv = document.getElementById('status');
+
+            if(!inputCode) {
+                alert("გთხოვთ ჩაწეროთ კოდი!");
+                return;
+            }
+
+            // ნებისმიერ შეყვანილ ტექსტზე აჩვენებს მწვანე შეტყობინებას
+            statusDiv.style.color = "green";
+            statusDiv.innerText = "სწორია, რეგისტრირებულია კოდი ✅";
+        }
+    </script>
+
+</body>
+</html>
