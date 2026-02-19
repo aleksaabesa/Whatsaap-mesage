@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WhatsApp კოდის მიღება</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #e5ddd5; }
+        .btn { background: #25D366; color: white; padding: 15px 30px; border: none; border-radius: 50px; font-size: 18px; cursor: pointer; text-decoration: none; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <h2>დააჭირე ღილაკს კოდის მისაღებად</h2>
+    
+    <input type="text" id="phone" placeholder="995XXXXXXXXX" style="padding: 10px; border-radius: 5px; border: 1px solid #ccc;"><br><br>
+
+    <button onclick="sendViaWA()" class="btn">WhatsApp კოდის მიღება</button>
+
+    <script>
+        function sendViaWA() {
+            const phone = document.getElementById('phone').value;
+            const randomCode = Math.floor(1000 + Math.random() * 9000);
+            const message = "გამარჯობა! შენი ახალთახალი კოდია: " + randomCode;
+            
+            // ეს პირდაპირ ხსნის WhatsApp-ს და უგზავნის მესიჯს შენს მიერ მითითებულ ნომერზე
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+
+</body>
+</html>
